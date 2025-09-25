@@ -1,0 +1,44 @@
+[debug] [2025-09-25T01:01:34.802Z] ----------------------------------------------------------------------
+[debug] [2025-09-25T01:01:34.804Z] Command:       /Users/landa/.nvm/versions/node/v22.13.1/bin/node /Users/landa/.nvm/versions/node/v22.13.1/bin/firebase emulators:start
+[debug] [2025-09-25T01:01:34.805Z] CLI Version:   14.12.1
+[debug] [2025-09-25T01:01:34.805Z] Platform:      darwin
+[debug] [2025-09-25T01:01:34.805Z] Node Version:  v22.13.1
+[debug] [2025-09-25T01:01:34.805Z] Time:          Wed Sep 24 2025 21:01:34 GMT-0400 (Eastern Daylight Time)
+[debug] [2025-09-25T01:01:34.805Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-09-25T01:01:34.925Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-09-25T01:01:34.926Z] > authorizing via signed-in user (xsphinx@gmail.com)
+[info] i  emulators: Starting emulators: apphosting {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: apphosting"}}
+[debug] [2025-09-25T01:01:35.546Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-09-25T01:01:35.546Z] [apphosting] App Hosting Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-09-25T01:01:35.546Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"apphosting":[{"address":"127.0.0.1","family":"IPv4","port":5002}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2025-09-25T01:01:35.548Z] [hub] writing locator at /var/folders/k1/1yc2gjt50qv96g3h37rvstkr0000gn/T/hub-yafim-a6045.json
+[debug] [2025-09-25T01:01:35.664Z] Checked if tokens are valid: true, expires at: 1758765176718
+[debug] [2025-09-25T01:01:35.664Z] Checked if tokens are valid: true, expires at: 1758765176718
+[debug] [2025-09-25T01:01:35.664Z] >>> [apiv2][query] GET https://firebaseapphosting.googleapis.com/v1beta/projects/yafim-a6045/locations/-/backends 
+[debug] [2025-09-25T01:01:36.766Z] <<< [apiv2][status] GET https://firebaseapphosting.googleapis.com/v1beta/projects/yafim-a6045/locations/-/backends 200
+[debug] [2025-09-25T01:01:36.767Z] <<< [apiv2][body] GET https://firebaseapphosting.googleapis.com/v1beta/projects/yafim-a6045/locations/-/backends {"backends":[{"name":"projects/yafim-a6045/locations/us-central1/backends/homepage","createTime":"2025-09-25T00:46:53.787731229Z","updateTime":"2025-09-25T00:59:08.115604Z","uri":"homepage--yafim-a6045.us-central1.hosted.app","managedResources":[{"runService":{"service":"projects/302972980349/locations/us-central1/services/homepage"}}],"codebase":{"repository":"projects/yafim-a6045/locations/us-central1/connections/apphosting-github-conn-ypj9dz6/gitRepositoryLinks/landa-homepage","rootDirectory":"/"},"uid":"7f534014-9f4f-41ad-86cc-f5fffde1cfb4","etag":"hYYTnGdPkFutTveeuN6QTw4duJekdZt1E8AMiroW2m4","reconciling":false,"servingLocality":"GLOBAL_ACCESS","serviceAccount":"firebase-app-hosting-compute@yafim-a6045.iam.gserviceaccount.com","appId":"1:302972980349:web:d03dba51cc93ac38927514"}]}
+[debug] [2025-09-25T01:01:36.767Z] Checked if tokens are valid: true, expires at: 1758765176718
+[debug] [2025-09-25T01:01:36.767Z] Checked if tokens are valid: true, expires at: 1758765176718
+[debug] [2025-09-25T01:01:36.768Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:302972980349:web:d03dba51cc93ac38927514/config [none]
+[debug] [2025-09-25T01:01:37.297Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:302972980349:web:d03dba51cc93ac38927514/config 200
+[debug] [2025-09-25T01:01:37.297Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:302972980349:web:d03dba51cc93ac38927514/config {"projectId":"yafim-a6045","appId":"1:302972980349:web:d03dba51cc93ac38927514","storageBucket":"yafim-a6045.firebasestorage.app","apiKey":"AIzaSyBG_Y42xhTGRvMiWaWDooAGYtTuvXYmKG4","authDomain":"yafim-a6045.firebaseapp.com","messagingSenderId":"302972980349","measurementId":"G-6MCD7WM7CS"}
+[info] i  apphosting: running custom start command: 'npm run dev' {"metadata":{"emulator":{"name":"apphosting"},"message":"running custom start command: 'npm run dev'"}}
+[warn] ⚠  emulators: The Emulator UI is not starting, either because none of the running emulators have a UI component or the Emulator UI cannot determine the Project ID. Pass the --project flag to specify a project. {"metadata":{"emulator":{"name":"hub"},"message":"The Emulator UI is not starting, either because none of the running emulators have a UI component or the Emulator UI cannot determine the Project ID. Pass the --project flag to specify a project."}}
+[info] i  apphosting: connecting apphosting emulator {"metadata":{"emulator":{"name":"apphosting"},"message":"connecting apphosting emulator"}}
+[debug] [2025-09-25T01:01:38.811Z] Could not find VSCode notification endpoint: FetchError: request to http://localhost:40001/vscode/notify failed, reason: . If you are not running the Firebase Data Connect VSCode extension, this is expected and not an issue.
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────┬────────────────┐
+│ Emulator    │ Host:Port      │
+├─────────────┼────────────────┤
+│ App Hosting │ localhost:5002 │
+└─────────────┴────────────────┘
+  Emulator Hub host: 127.0.0.1 port: 4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
