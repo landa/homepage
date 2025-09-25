@@ -9,7 +9,9 @@ export default function Home() {
                     <Card>
                         <Flex direction="row" gap="5">
                             <Inset side="left">
-                                <Image width="200" height="200" src="/yafim.png" alt="Yafim Landa" />
+                                <a href="/yafim.jpg" className="block">
+                                    <Image width="200" height="200" src="/yafim.png" alt="Yafim Landa" />
+                                </a>
                             </Inset>
                             <Flex direction="column" gap="4" maxWidth="300px">
                                 <Flex direction="row" gap="5">
