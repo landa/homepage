@@ -1,15 +1,19 @@
 @import "tailwindcss";
 @import "@radix-ui/themes/styles.css";
 
-a {
-    border: 1px dashed #555;
+a.emph {
+    display: inline-block;
+    border: 1px dashed #ccc;
+    background-color: white;
     border-radius: 10px;
-    padding: 3px;
+    padding: 0 3px;
     margin: -3px;
+    transform: scale(1);
     transition: all 0.2s;
 }
 
-a:hover {
-    border: 1px dashed #aaa;
-    color: white;
+a.emph:hover {
+    border: 1px dashed black;
+    color: black;
+    transform: scale(1.05);
 }
