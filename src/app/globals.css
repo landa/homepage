@@ -4,10 +4,10 @@
 a.emph {
     display: inline-block;
     border: 1px dashed #ccc;
-    background-color: white;
+    background-color: #fafafa;
     border-radius: 10px;
     padding: 0 3px;
-    margin: -3px;
+    margin: -3px -1px;
     transform: scale(1);
     transition: all 0.2s;
 }
@@ -15,5 +15,6 @@ a.emph {
 a.emph:hover {
     border: 1px dashed black;
     color: black;
+    background-color: white;
     transform: scale(1.05);
 }

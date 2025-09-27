@@ -5,12 +5,17 @@ export default function Home() {
     return (
         <div className="font-sans grid grid-rows-[20px_1fr_20px] items-start justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
             <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-                <Theme appearance="light" className="bg-stone-100 rounded-lg">
+                <Theme appearance="light" className="bg-white rounded-lg">
                     <Card>
-                        <Flex direction="row" gap="5">
-                            <Inset side="left">
+                        <Flex direction={{ initial: "column", sm: "row" }} gap={{initial: "0", sm: "5"}}>
+                            <Inset side="top" className="md:hidden">
                                 <a href="/yafim.jpg" className="block rounded">
-                                    <Image width="200" height="200" src="/yafim.png" alt="Yafim Landa" />
+                                    <Image src="/yafim.png" alt="Yafim Landa" width={200} height={200} sizes="(min-width: 768px) 200px, 100vw" className="w-full h-auto" />
+                                </a>
+                            </Inset>
+                            <Inset side="left" className="hidden md:block">
+                                <a href="/yafim.jpg" className="block rounded">
+                                    <Image src="/yafim.png" alt="Yafim Landa" width={200} height={200} sizes="(min-width: 768px) 200px, 100vw" className="w-[200px] h-auto" />
                                 </a>
                             </Inset>
                             <Flex direction="column" gap="4" maxWidth="300px">
