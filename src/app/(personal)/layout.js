@@ -95,14 +95,6 @@ export default function PersonalLayout({ children }) {
             path: "/",
             content: <HomeColumn />
         },
-        {
-            path: "/work",
-            content: <WorkColumn />
-        },
-        {
-            path: "/research",
-            content: <ResearchColumn />
-        }
     ];
 
     return <ColumnLayout columns={columns} />;

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 /**
  * A layout component that displays multiple routes as horizontal columns
@@ -17,9 +17,11 @@ export default function ColumnLayout({ columns }) {
     const columnRefs = useRef({});
     const isScrollingProgrammatically = useRef(false);
     const scrollTimeout = useRef(null);
+    const [isInitialMount, setIsInitialMount] = useState(true);
+    const [isPositioned, setIsPositioned] = useState(false);
 
-    // Scroll to active column when pathname changes
-    useEffect(() => {
+    // Initial positioning using useLayoutEffect (runs before paint, no flash)
+    useLayoutEffect(() => {
         const activeIndex = columns.findIndex((col) => col.path === pathname);
         
         if (activeIndex !== -1 && scrollContainerRef.current && columnRefs.current[pathname]) {
@@ -32,18 +34,28 @@ export default function ColumnLayout({ columns }) {
             const containerWidth = container.offsetWidth;
             const scrollPosition = columnLeft - (containerWidth / 2) + (columnWidth / 2);
             
-            isScrollingProgrammatically.current = true;
-            container.scrollTo({
-                left: scrollPosition,
-                behavior: "smooth"
-            });
-            
-            // Reset flag after scroll completes
-            setTimeout(() => {
-                isScrollingProgrammatically.current = false;
-            }, 500);
+            // Set scroll position immediately without animation on initial mount
+            if (isInitialMount) {
+                container.scrollLeft = scrollPosition;
+                setIsInitialMount(false);
+                // Use requestAnimationFrame to ensure position is set before showing
+                requestAnimationFrame(() => {
+                    setIsPositioned(true);
+                });
+            } else {
+                // Smooth scroll for subsequent navigation
+                isScrollingProgrammatically.current = true;
+                container.scrollTo({
+                    left: scrollPosition,
+                    behavior: "smooth"
+                });
+                
+                setTimeout(() => {
+                    isScrollingProgrammatically.current = false;
+                }, 500);
+            }
         }
-    }, [pathname, columns]);
+    }, [pathname, columns, isInitialMount]);
 
     // Handle scroll events to update the URL (only on small screens)
     useEffect(() => {
@@ -119,9 +131,18 @@ export default function ColumnLayout({ columns }) {
                 height: "100vh",
                 scrollSnapType: "x mandatory",
                 scrollBehavior: "smooth",
-                WebkitOverflowScrolling: "touch"
+                WebkitOverflowScrolling: "touch",
+                visibility: isPositioned ? "visible" : "hidden"
             }}
         >
+            {/* Spacer to allow first column to be centered */}
+            <div 
+                style={{
+                    flexShrink: 0,
+                    width: "calc(50vw - min(600px, 90vw) / 2)"
+                }}
+            />
+            
             {columns.map((column, index) => (
                 <div
                     key={column.path}
@@ -150,6 +171,14 @@ export default function ColumnLayout({ columns }) {
                     </div>
                 </div>
             ))}
+            
+            {/* Spacer to allow last column to be centered */}
+            <div 
+                style={{
+                    flexShrink: 0,
+                    width: "calc(50vw - min(600px, 90vw) / 2)"
+                }}
+            />
         </div>
     );
 }
