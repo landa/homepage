@@ -41,15 +41,15 @@ const HomeColumn = () => (
             , the best data processing software for small teams.
         </Text>
         <Text size="4" color="gray">
-            Previously a researcher in robotics at{" "}
+            Previously: robotics researcher at{" "}
             <a href="http://csail.mit.edu" className="emph">
                 @MIT
             </a>
-            , software engineer at{" "}
+            , AR/VR software engineer at{" "}
             <a href="https://tech.facebook.com/reality-labs/" className="emph">
                 @Meta
             </a>
-            , and a trader at{" "}
+            , and energy trader at{" "}
             <a
                 href="https://www.goldmansachs.com/what-we-do/ficc-and-equities"
                 className="emph"
