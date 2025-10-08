@@ -9,7 +9,7 @@ import { Card, Flex, Inset, Theme } from "@radix-ui/themes";
  */
 export default function ContentCard({ image, children }) {
     return (
-        <Theme appearance="light" className="bg-white rounded-lg max-w-[600px]">
+        <Theme appearance="light" className="bg-white rounded-lg w-full">
             <Card className="max-h-[600px] md:h-auto overflow-visible">
                 <Flex
                     direction={{ initial: "column", sm: "row" }}

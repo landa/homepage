@@ -21,3 +21,38 @@ a.emph:hover {
     transform: scale(1.05);
     z-index: 2;
 }
+
+/* Column layout styles */
+.column-scroll-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+}
+
+.column-scroll-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.column-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.column-scroll-container::-webkit-scrollbar-thumb {
+    background-color: rgba(155, 155, 155, 0.5);
+    border-radius: 20px;
+    border: transparent;
+}
+
+.column {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.column.active {
+    transform: scale(1);
+}
+
+@media (hover: hover) {
+    .column:not(.active):hover {
+        opacity: 0.75;
+        cursor: pointer;
+    }
+}
