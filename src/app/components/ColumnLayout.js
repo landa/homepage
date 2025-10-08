@@ -8,13 +8,15 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
  * The active route is centered in the viewport
  * 
  * @param {Object} props - Component props
- * @param {Array<{path: string, content: React.ReactNode}>} props.columns - Array of column configurations
+ * @param {Array<{path: string, title?: string, content: React.ReactNode}>} props.columns - Array of column configurations
  */
 export default function ColumnLayout({ columns }) {
     const pathname = usePathname();
     const router = useRouter();
     const scrollContainerRef = useRef(null);
+    const navRef = useRef(null);
     const columnRefs = useRef({});
+    const navButtonRefs = useRef({});
     const isScrollingProgrammatically = useRef(false);
     const scrollTimeout = useRef(null);
     const [isInitialMount, setIsInitialMount] = useState(true);
@@ -54,6 +56,22 @@ export default function ColumnLayout({ columns }) {
                     isScrollingProgrammatically.current = false;
                 }, 500);
             }
+        }
+
+        // Scroll the navigation bar to center the active button
+        if (navRef.current && navButtonRefs.current[pathname]) {
+            const nav = navRef.current;
+            const activeButton = navButtonRefs.current[pathname];
+            
+            const buttonLeft = activeButton.offsetLeft;
+            const buttonWidth = activeButton.offsetWidth;
+            const navWidth = nav.offsetWidth;
+            const navScrollPosition = buttonLeft - (navWidth / 2) + (buttonWidth / 2);
+            
+            nav.scrollTo({
+                left: navScrollPosition,
+                behavior: isInitialMount ? "auto" : "smooth"
+            });
         }
     }, [pathname, columns, isInitialMount]);
 
@@ -121,20 +139,88 @@ export default function ColumnLayout({ columns }) {
     };
 
     return (
-        <div 
-            ref={scrollContainerRef}
-            className="column-scroll-container"
-            style={{
-                display: "flex",
-                overflowX: "auto",
-                overflowY: "hidden",
-                height: "100vh",
-                scrollSnapType: "x mandatory",
-                scrollBehavior: "smooth",
-                WebkitOverflowScrolling: "touch",
-                visibility: isPositioned ? "visible" : "hidden"
-            }}
-        >
+        <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+            {/* Navigation Bar */}
+            <nav 
+                ref={navRef}
+                style={{
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 100,
+                    backgroundColor: "var(--color-background)",
+                    borderBottom: "1px solid var(--gray-a3)",
+                    padding: "0.75rem 0",
+                    display: "flex",
+                    overflowX: "auto",
+                    overflowY: "hidden",
+                    gap: "0.5rem",
+                    scrollbarWidth: "none",
+                    msOverflowStyle: "none",
+                }}
+            >
+                <style jsx>{`
+                    nav::-webkit-scrollbar {
+                        display: none;
+                    }
+                `}</style>
+                {/* Left spacer to allow first item to be centered */}
+                <div style={{ flexShrink: 0, width: "calc(50vw - 60px)" }} />
+                
+                {columns.map((column) => (
+                    <button
+                        key={column.path}
+                        ref={(el) => navButtonRefs.current[column.path] = el}
+                        onClick={() => handleColumnClick(column.path)}
+                        style={{
+                            padding: "0.25rem 0.75rem",
+                            border: "none",
+                            borderRadius: "4px",
+                            backgroundColor: "transparent",
+                            color: pathname === column.path ? "var(--gray-12)" : "var(--gray-11)",
+                            fontWeight: pathname === column.path ? "500" : "400",
+                            fontSize: "0.875rem",
+                            cursor: "pointer",
+                            transition: "all 0.15s ease",
+                            textDecoration: pathname === column.path ? "underline" : "none",
+                            textUnderlineOffset: "3px",
+                            textDecorationThickness: "1px",
+                            opacity: pathname === column.path ? 1 : 0.7,
+                            flexShrink: 0,
+                            whiteSpace: "nowrap",
+                        }}
+                        onMouseEnter={(e) => {
+                            if (pathname !== column.path) {
+                                e.target.style.opacity = "1";
+                            }
+                        }}
+                        onMouseLeave={(e) => {
+                            if (pathname !== column.path) {
+                                e.target.style.opacity = "0.7";
+                            }
+                        }}
+                    >
+                        {column.title || column.path}
+                    </button>
+                ))}
+                
+                {/* Right spacer to allow last item to be centered */}
+                <div style={{ flexShrink: 0, width: "calc(50vw - 60px)" }} />
+            </nav>
+            
+            <div 
+                ref={scrollContainerRef}
+                className="column-scroll-container"
+                style={{
+                    display: "flex",
+                    overflowX: "auto",
+                    overflowY: "hidden",
+                    flex: 1,
+                    scrollSnapType: "x mandatory",
+                    scrollBehavior: "smooth",
+                    WebkitOverflowScrolling: "touch",
+                    visibility: isPositioned ? "visible" : "hidden"
+                }}
+            >
             {/* Spacer to allow first column to be centered */}
             <div 
                 style={{
@@ -179,6 +265,7 @@ export default function ColumnLayout({ columns }) {
                     width: "calc(50vw - min(600px, 90vw) / 2)"
                 }}
             />
+            </div>
         </div>
     );
 }

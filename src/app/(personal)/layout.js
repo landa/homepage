@@ -49,7 +49,7 @@ const HomeColumn = () => (
             <a href="https://tech.facebook.com/reality-labs/" className="emph">
                 @Meta
             </a>
-            , and energy trader at{" "}
+            , energy trader at{" "}
             <a
                 href="https://www.goldmansachs.com/what-we-do/ficc-and-equities"
                 className="emph"
@@ -93,7 +93,18 @@ export default function PersonalLayout({ children }) {
     const columns = [
         {
             path: "/",
+            title: "Home",
             content: <HomeColumn />
+        },
+        {
+            path: "/work",
+            title: "Work",
+            content: <WorkColumn />
+        },
+        {
+            path: "/research",
+            title: "Research",
+            content: <ResearchColumn />
         },
     ];
 
