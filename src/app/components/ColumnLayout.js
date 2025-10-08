@@ -75,16 +75,12 @@ export default function ColumnLayout({ columns }) {
         }
     }, [pathname, columns, isInitialMount]);
 
-    // Handle scroll events to update the URL (only on small screens)
+    // Handle scroll events to update the URL
     useEffect(() => {
         const container = scrollContainerRef.current;
         if (!container) return;
 
         const handleScroll = () => {
-            // Only handle scroll navigation on small screens (mobile)
-            const isMobile = window.innerWidth < 768;
-            if (!isMobile) return;
-
             // Don't update URL if we're scrolling programmatically (from route change)
             if (isScrollingProgrammatically.current) return;
 
@@ -140,72 +136,74 @@ export default function ColumnLayout({ columns }) {
 
     return (
         <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-            {/* Navigation Bar */}
-            <nav 
-                ref={navRef}
-                style={{
-                    position: "sticky",
-                    top: 0,
-                    zIndex: 100,
-                    backgroundColor: "var(--color-background)",
-                    borderBottom: "1px solid var(--gray-a3)",
-                    padding: "0.75rem 0",
-                    display: "flex",
-                    overflowX: "auto",
-                    overflowY: "hidden",
-                    gap: "0.5rem",
-                    scrollbarWidth: "none",
-                    msOverflowStyle: "none",
-                }}
-            >
-                <style jsx>{`
-                    nav::-webkit-scrollbar {
-                        display: none;
-                    }
-                `}</style>
-                {/* Left spacer to allow first item to be centered */}
-                <div style={{ flexShrink: 0, width: "calc(50vw - 60px)" }} />
-                
-                {columns.map((column) => (
-                    <button
-                        key={column.path}
-                        ref={(el) => navButtonRefs.current[column.path] = el}
-                        onClick={() => handleColumnClick(column.path)}
-                        style={{
-                            padding: "0.25rem 0.75rem",
-                            border: "none",
-                            borderRadius: "4px",
-                            backgroundColor: "transparent",
-                            color: pathname === column.path ? "var(--gray-12)" : "var(--gray-11)",
-                            fontWeight: pathname === column.path ? "500" : "400",
-                            fontSize: "0.875rem",
-                            cursor: "pointer",
-                            transition: "all 0.15s ease",
-                            textDecoration: pathname === column.path ? "underline" : "none",
-                            textUnderlineOffset: "3px",
-                            textDecorationThickness: "1px",
-                            opacity: pathname === column.path ? 1 : 0.7,
-                            flexShrink: 0,
-                            whiteSpace: "nowrap",
-                        }}
-                        onMouseEnter={(e) => {
-                            if (pathname !== column.path) {
-                                e.target.style.opacity = "1";
-                            }
-                        }}
-                        onMouseLeave={(e) => {
-                            if (pathname !== column.path) {
-                                e.target.style.opacity = "0.7";
-                            }
-                        }}
-                    >
-                        {column.title || column.path}
-                    </button>
-                ))}
-                
-                {/* Right spacer to allow last item to be centered */}
-                <div style={{ flexShrink: 0, width: "calc(50vw - 60px)" }} />
-            </nav>
+            {/* Navigation Bar - only show if there are multiple columns */}
+            {columns.length > 1 && (
+                <nav 
+                    ref={navRef}
+                    style={{
+                        position: "sticky",
+                        top: 0,
+                        zIndex: 100,
+                        backgroundColor: "var(--color-background)",
+                        borderBottom: "1px solid var(--gray-a3)",
+                        padding: "0.75rem 0",
+                        display: "flex",
+                        overflowX: "auto",
+                        overflowY: "hidden",
+                        gap: "0.5rem",
+                        scrollbarWidth: "none",
+                        msOverflowStyle: "none",
+                    }}
+                >
+                    <style jsx>{`
+                        nav::-webkit-scrollbar {
+                            display: none;
+                        }
+                    `}</style>
+                    {/* Left spacer to allow first item to be centered */}
+                    <div style={{ flexShrink: 0, width: "calc(50vw - 60px)" }} />
+                    
+                    {columns.map((column) => (
+                        <button
+                            key={column.path}
+                            ref={(el) => navButtonRefs.current[column.path] = el}
+                            onClick={() => handleColumnClick(column.path)}
+                            style={{
+                                padding: "0.25rem 0.75rem",
+                                border: "none",
+                                borderRadius: "4px",
+                                backgroundColor: "transparent",
+                                color: pathname === column.path ? "var(--gray-12)" : "var(--gray-11)",
+                                fontWeight: pathname === column.path ? "500" : "400",
+                                fontSize: "0.875rem",
+                                cursor: "pointer",
+                                transition: "all 0.15s ease",
+                                textDecoration: pathname === column.path ? "underline" : "none",
+                                textUnderlineOffset: "3px",
+                                textDecorationThickness: "1px",
+                                opacity: pathname === column.path ? 1 : 0.7,
+                                flexShrink: 0,
+                                whiteSpace: "nowrap",
+                            }}
+                            onMouseEnter={(e) => {
+                                if (pathname !== column.path) {
+                                    e.target.style.opacity = "1";
+                                }
+                            }}
+                            onMouseLeave={(e) => {
+                                if (pathname !== column.path) {
+                                    e.target.style.opacity = "0.7";
+                                }
+                            }}
+                        >
+                            {column.title || column.path}
+                        </button>
+                    ))}
+                    
+                    {/* Right spacer to allow last item to be centered */}
+                    <div style={{ flexShrink: 0, width: "calc(50vw - 60px)" }} />
+                </nav>
+            )}
             
             <div 
                 ref={scrollContainerRef}
