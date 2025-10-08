@@ -1,4 +1,5 @@
 import { Card, Text, Flex, Box, Avatar, Inset, Theme } from "@radix-ui/themes";
+import Profile from "@/app/components/Profile";
 import Image from "next/image";
 
 export default function Home() {
@@ -74,6 +75,7 @@ export default function Home() {
                                     </a>
                                     .
                                 </Text>
+                                
                             </Flex>
                         </Flex>
                     </Card>
