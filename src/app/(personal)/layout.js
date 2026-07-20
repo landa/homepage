@@ -27,29 +27,25 @@ const HomeColumn = () => (
                     Yafim Landa
                 </Text>
                 <Text size="4" color="gray">
-                    <a href="mailto:yafim@cloudstrat.com" className="emph">
-                        yafim@cloudstrat.com
+                    <a href="mailto:landa@alum.mit.edu" className="emph">
+                        landa@alum.mit.edu
                     </a>
                 </Text>
             </Flex>
         </Flex>
         <Text size="4" color="gray">
-            Founder{" "}
-            <a href="https://cloudstrat.com" className="emph">
-                @CloudStrat
-            </a>
-            , the best data processing software for small teams.
+            Founder of CloudStrat, an agentic data platform for institutional traders.
         </Text>
         <Text size="4" color="gray">
-            Previously: robotics researcher at{" "}
+            Previously: robotics researcher {" "}
             <a href="http://csail.mit.edu" className="emph">
                 @MIT
             </a>
-            , AR/VR software engineer at{" "}
+            , AR/VR software engineer {" "}
             <a href="https://tech.facebook.com/reality-labs/" className="emph">
                 @Meta
             </a>
-            , energy trader at{" "}
+            , energy trader {" "}
             <a
                 href="https://www.goldmansachs.com/what-we-do/ficc-and-equities"
                 className="emph"
