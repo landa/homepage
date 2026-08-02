@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { auth, googleProvider } from "@/lib/firebaseClient";
 import { signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
 import { Card, Text, Flex, Button } from "@radix-ui/themes";
+import { isAdminUser } from "@/lib/admin";
 
 export default function AdminPage() {
     const [user, setUser] = useState(null);
-    const adminUid = "b4fw5YcvyhPaVA5sEJlqGypZoS32";
 
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, (u) => setUser(u));
@@ -22,7 +22,7 @@ export default function AdminPage() {
         await signOut(auth);
     };
 
-    const isAdmin = user && adminUid && user.uid === adminUid;
+    const isAdmin = isAdminUser(user);
 
     return (
         <div className="font-sans grid grid-rows-[20px_1fr_20px] items-start justify-items-center min-h-screen p-8">
@@ -40,11 +40,9 @@ export default function AdminPage() {
                                 <Text size="5" weight="bold">Welcome</Text>
                                 <Text size="3" color="gray">{user.email}</Text>
                                 <Text size="2" color="gray">UID: {user.uid}</Text>
-                                {adminUid && (
-                                    <Text size="2" color={isAdmin ? "green" : "red"}>
-                                        Admin: {isAdmin ? "yes" : "no"}
-                                    </Text>
-                                )}
+                                <Text size="2" color={isAdmin ? "green" : "red"}>
+                                    Admin: {isAdmin ? "yes" : "no"}
+                                </Text>
                                 <Flex gap="3">
                                     <Button onClick={handleSignOut} color="red">Sign out</Button>
                                 </Flex>
@@ -56,5 +54,3 @@ export default function AdminPage() {
         </div>
     );
 }
-
-

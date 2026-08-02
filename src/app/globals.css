@@ -22,6 +22,90 @@ a.emph:hover {
     z-index: 2;
 }
 
+.post-body p {
+    margin: 0 0 0.75rem;
+}
+
+.post-body p:last-child {
+    margin-bottom: 0;
+}
+
+.post-body h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem;
+    color: var(--gray-12);
+}
+
+.post-body ul,
+.post-body ol {
+    margin: 0 0 0.75rem;
+    padding-left: 1.25rem;
+}
+
+.post-body blockquote {
+    margin: 0 0 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 3px solid var(--gray-6);
+    color: var(--gray-10);
+}
+
+.post-body pre {
+    margin: 0 0 0.75rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background: var(--gray-3);
+    overflow-x: auto;
+}
+
+.post-body code {
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.9em;
+}
+
+.post-editor .ProseMirror {
+    min-height: 50vh;
+    outline: none;
+}
+
+.post-editor .ProseMirror p {
+    margin: 0 0 0.75rem;
+}
+
+.post-editor .ProseMirror h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem;
+}
+
+.post-editor .ProseMirror ul,
+.post-editor .ProseMirror ol {
+    margin: 0 0 0.75rem;
+    padding-left: 1.25rem;
+}
+
+.post-editor .ProseMirror blockquote {
+    margin: 0 0 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 3px solid #ddd;
+}
+
+.post-editor .ProseMirror pre {
+    margin: 0 0 0.75rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background: #f4f4f4;
+    overflow-x: auto;
+}
+
+.post-editor .ProseMirror p.is-editor-empty:first-child::before {
+    content: "Write something...";
+    float: left;
+    color: #aaa;
+    pointer-events: none;
+    height: 0;
+}
+
 /* Column layout styles */
 .column-scroll-container {
     scrollbar-width: thin;
@@ -56,3 +140,5 @@ a.emph:hover {
         cursor: pointer;
     }
 }
+
+
