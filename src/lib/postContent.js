@@ -10,6 +10,12 @@ export function plainTextFromHtml(html) {
         .trim();
 }
 
+export function postDescription(body, maxLength = 160) {
+    const text = plainTextFromHtml(body);
+    if (text.length <= maxLength) return text;
+    return `${text.slice(0, maxLength - 1).trimEnd()}…`;
+}
+
 /** Convert plain-text newlines into TipTap-friendly paragraph HTML. */
 export function bodyToEditorContent(body) {
     if (!body) return "";
