@@ -5,4 +5,5 @@ export const firebaseConfig = {
     storageBucket: "yafim-a6045.appspot.com",
     messagingSenderId: "302972980349",
     appId: "1:302972980349:web:d03dba51cc93ac38927514",
+    measurementId: "G-6MCD7WM7CS",
 };
