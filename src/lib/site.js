@@ -1,6 +1,4 @@
-export const SITE_URL =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://homepage--yafim-a6045.us-central1.hosted.app";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://yaf.im";
 
 export const SITE_NAME = "Yafim Landa";
 
