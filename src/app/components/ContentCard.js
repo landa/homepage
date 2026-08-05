@@ -21,7 +21,7 @@ export default function ContentCard({ image, children }) {
                     {image && (
                         <Inset
                             side="top"
-                            className="md:hidden flex-1 min-h-[300px] overflow-hidden shrink-0"
+                            className="relative md:hidden flex-1 min-h-[300px] overflow-hidden shrink-0"
                         >
                             {image}
                         </Inset>

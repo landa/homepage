@@ -21,8 +21,29 @@ function ToolbarButton({ active, disabled, onClick, children }) {
     );
 }
 
+function normalizeUrl(value) {
+    const trimmed = value.trim();
+    if (!trimmed) return "";
+    if (/^(https?:\/\/|mailto:)/i.test(trimmed)) return trimmed;
+    return `https://${trimmed}`;
+}
+
 function EditorToolbar({ editor }) {
     if (!editor) return null;
+
+    const setLink = () => {
+        const previous = editor.getAttributes("link").href || "";
+        const next = window.prompt("Link URL", previous);
+        if (next === null) return;
+
+        const url = normalizeUrl(next);
+        if (!url) {
+            editor.chain().focus().extendMarkRange("link").unsetLink().run();
+            return;
+        }
+
+        editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+    };
 
     return (
         <Flex
@@ -72,6 +93,15 @@ function EditorToolbar({ editor }) {
             >
                 Code
             </ToolbarButton>
+            <ToolbarButton active={editor.isActive("link")} onClick={setLink}>
+                Link
+            </ToolbarButton>
+            <ToolbarButton
+                disabled={!editor.isActive("link")}
+                onClick={() => editor.chain().focus().unsetLink().run()}
+            >
+                Unlink
+            </ToolbarButton>
         </Flex>
     );
 }
@@ -90,7 +120,19 @@ export default function PostEditorDialog({
     const [error, setError] = useState("");
 
     const editor = useEditor({
-        extensions: [StarterKit],
+        extensions: [
+            StarterKit.configure({
+                link: {
+                    openOnClick: false,
+                    autolink: true,
+                    defaultProtocol: "https",
+                    HTMLAttributes: {
+                        rel: "noopener noreferrer",
+                        target: "_blank",
+                    },
+                },
+            }),
+        ],
         content: bodyToEditorContent(initialBody),
         immediatelyRender: false,
         editorProps: {

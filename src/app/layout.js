@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Theme } from "@radix-ui/themes";
 import Analytics from "@/app/components/Analytics";
+import BrowserNavTransitions from "@/app/components/BrowserNavTransitions";
 import {
     SITE_DESCRIPTION,
     SITE_NAME,
@@ -60,6 +61,7 @@ export default function RootLayout({ children }) {
                 <Theme appearance="dark">
                     {children}
                     <Analytics />
+                    <BrowserNavTransitions />
                 </Theme>
             </body>
         </html>

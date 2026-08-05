@@ -35,6 +35,11 @@ function escapeHtml(value) {
         .replace(/"/g, "&quot;");
 }
 
+/** Keep link text, remove the anchors (for homepage previews). */
+export function stripLinks(html) {
+    return String(html || "").replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, "$1");
+}
+
 /**
  * Keep the first `count` block-level paragraphs/blocks for homepage previews.
  */

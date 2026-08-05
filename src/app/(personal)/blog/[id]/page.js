@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import NavTransition from "@/app/components/NavTransition";
 import PostDetail from "@/app/components/PostDetail";
 import { postDescription } from "@/lib/postContent";
 import { getPost } from "@/lib/postsServer";
@@ -45,10 +46,12 @@ export default async function BlogPostPage({ params }) {
     if (!post) notFound();
 
     return (
-        <main className="min-h-screen px-4 py-8 md:px-0 md:py-12">
-            <div className="mx-auto w-full max-w-[900px] md:w-[90vw] md:min-w-[320px]">
-                <PostDetail post={post} />
-            </div>
-        </main>
+        <NavTransition>
+            <main className="min-h-screen px-4 py-8 md:px-0 md:py-12">
+                <div className="mx-auto w-[90vw] min-w-[320px] max-w-[600px]">
+                    <PostDetail post={post} />
+                </div>
+            </main>
+        </NavTransition>
     );
 }

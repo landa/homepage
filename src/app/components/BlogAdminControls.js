@@ -1,29 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Flex, Text } from "@radix-ui/themes";
 import { useAuth } from "@/app/components/AuthProvider";
 import PostEditorDialog from "@/app/components/PostEditorDialog";
-import { createPost, deletePost, updatePost } from "@/lib/posts";
+import {
+    createPost,
+    deletePost,
+    listArchivedPosts,
+    setPostArchived,
+    updatePost,
+} from "@/lib/posts";
 
-export function BlogComposer() {
+export function BlogComposer({ onOpenChange } = {}) {
     const { isAdmin } = useAuth();
     const router = useRouter();
     const [open, setOpen] = useState(false);
 
     if (!isAdmin) return null;
 
+    const handleOpenChange = (next) => {
+        setOpen(next);
+        onOpenChange?.(next);
+    };
+
     return (
         <>
-            <div>
-                <Button size="1" variant="soft" onClick={() => setOpen(true)}>
-                    New post
-                </Button>
-            </div>
+            <Button size="1" variant="soft" onClick={() => handleOpenChange(true)}>
+                New post
+            </Button>
             <PostEditorDialog
                 open={open}
-                onOpenChange={setOpen}
+                onOpenChange={handleOpenChange}
                 titleLabel="New post"
                 submitLabel="Publish"
                 onSubmit={async ({ title, body }) => {
@@ -31,6 +40,112 @@ export function BlogComposer() {
                     router.refresh();
                 }}
             />
+        </>
+    );
+}
+
+export function ArchivedPostsList() {
+    const { isAdmin } = useAuth();
+    const router = useRouter();
+    const [posts, setPosts] = useState([]);
+    const [error, setError] = useState("");
+
+    const refresh = useCallback(async () => {
+        if (!isAdmin) {
+            setPosts([]);
+            return;
+        }
+        try {
+            setPosts(await listArchivedPosts());
+            setError("");
+        } catch (err) {
+            setError(err.message || "Could not load archived posts.");
+        }
+    }, [isAdmin]);
+
+    useEffect(() => {
+        refresh();
+    }, [refresh]);
+
+    if (!isAdmin || (posts.length === 0 && !error)) return null;
+
+    return (
+        <Flex direction="column" gap="2">
+            <Text size="1" color="gray">
+                Archived
+            </Text>
+            {posts.map((post) => (
+                <Flex key={post.id} align="center" justify="between" gap="2">
+                    <Text size="1" className="min-w-0 truncate">
+                        {post.title}
+                    </Text>
+                    <Button
+                        size="1"
+                        variant="ghost"
+                        onClick={async () => {
+                            await setPostArchived(post.id, false);
+                            await refresh();
+                            router.refresh();
+                        }}
+                    >
+                        Unarchive
+                    </Button>
+                </Flex>
+            ))}
+            {error && (
+                <Text size="1" color="red">
+                    {error}
+                </Text>
+            )}
+        </Flex>
+    );
+}
+
+export function BlogPostActions({ post, redirectTo, className }) {
+    const { isAdmin } = useAuth();
+
+    if (!isAdmin) return null;
+
+    return (
+        <Flex gap="1" wrap="wrap" className={className}>
+            <BlogEditButton post={post} />
+            <BlogArchiveButton post={post} redirectTo={redirectTo} />
+            <BlogDeleteButton postId={post.id} redirectTo={redirectTo} />
+        </Flex>
+    );
+}
+
+export function BlogArchiveButton({ post, redirectTo }) {
+    const { isAdmin } = useAuth();
+    const router = useRouter();
+    const [error, setError] = useState("");
+
+    if (!isAdmin) return null;
+
+    const archived = Boolean(post.archived);
+
+    const handleToggle = async () => {
+        try {
+            await setPostArchived(post.id, !archived);
+            if (!archived && redirectTo) {
+                router.push(redirectTo, { transitionTypes: ["nav-back"] });
+            }
+            router.refresh();
+        } catch (err) {
+            setError(err.message || "Could not update archive.");
+        }
+    };
+
+    return (
+        <>
+            <Button size="1" variant="ghost" onClick={handleToggle}>
+                {archived ? "Unarchive" : "Archive"}
+            </Button>
+            {error && (
+                <Text size="1" color="red">
+                    {error}
+                </Text>
+            )}
         </>
     );
 }
@@ -75,7 +190,7 @@ export function BlogDeleteButton({ postId, redirectTo }) {
         try {
             await deletePost(postId);
             if (redirectTo) {
-                router.push(redirectTo);
+                router.push(redirectTo, { transitionTypes: ["nav-back"] });
             }
             router.refresh();
         } catch (err) {

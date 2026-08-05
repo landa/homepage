@@ -22,14 +22,26 @@ function serializePost(snapshot) {
         id: snapshot.id,
         title: data.title ?? "",
         body: data.body ?? "",
+        archived: Boolean(data.archived),
         createdAt: createdAt ? createdAt.toISOString() : null,
     };
 }
 
-export async function getPosts() {
+async function fetchAllPosts() {
     const postsQuery = query(collection(getDb(), "posts"), orderBy("createdAt", "desc"));
     const snapshot = await getDocs(postsQuery);
     return snapshot.docs.map(serializePost);
+}
+
+/** Public homepage feed — archived posts are omitted. */
+export async function getPosts() {
+    const posts = await fetchAllPosts();
+    return posts.filter((post) => !post.archived);
+}
+
+export async function getArchivedPosts() {
+    const posts = await fetchAllPosts();
+    return posts.filter((post) => post.archived);
 }
 
 export async function getPost(id) {

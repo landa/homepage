@@ -6,7 +6,7 @@ export default function AboutCard() {
     return (
         <ContentCard
             image={
-                <a href="/yafim.jpg" className="block h-full w-full rounded">
+                <a href="/yafim.jpg" className="relative block h-full w-full rounded">
                     <Image
                         src="/yafim.png"
                         alt="Yafim Landa"
@@ -24,7 +24,7 @@ export default function AboutCard() {
                         Yafim Landa
                     </Text>
                     <Text size="4" color="gray">
-                        <a href="mailto:landa@alum.mit.edu" className="emph">
+                        <a href="mailto:landa@alum.mit.edu" className="about-link">
                             landa@alum.mit.edu
                         </a>
                     </Text>
@@ -35,17 +35,17 @@ export default function AboutCard() {
             </Text>
             <Text size="4" color="gray">
                 Previously: robotics researcher{" "}
-                <a href="http://csail.mit.edu" className="emph">
+                <a href="http://csail.mit.edu" className="about-link">
                     @MIT
                 </a>
                 , AR/VR software engineer{" "}
-                <a href="https://tech.facebook.com/reality-labs/" className="emph">
+                <a href="https://tech.facebook.com/reality-labs/" className="about-link">
                     @Meta
                 </a>
                 , energy trader{" "}
                 <a
                     href="https://www.goldmansachs.com/what-we-do/ficc-and-equities"
-                    className="emph"
+                    className="about-link"
                 >
                     @Goldman Sachs
                 </a>

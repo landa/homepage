@@ -3,6 +3,10 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { Button, Flex, Text } from "@radix-ui/themes";
+import {
+    ArchivedPostsList,
+    BlogComposer,
+} from "@/app/components/BlogAdminControls";
 import { auth, googleProvider } from "@/lib/firebaseClient";
 import { isAdminUser } from "@/lib/admin";
 
@@ -56,7 +60,7 @@ export default function AuthProvider({ children }) {
             />
 
             {open && (
-                <div className="fixed bottom-10 left-3 z-50 w-[240px] rounded-lg border border-[var(--gray-a5)] bg-[var(--color-panel-solid)] p-3 shadow-lg">
+                <div className="fixed bottom-10 left-3 z-50 w-[280px] rounded-lg border border-[var(--gray-a5)] bg-[var(--color-panel-solid)] p-3 shadow-lg">
                     <Flex direction="column" gap="2">
                         <Text size="2" weight="medium">
                             Admin
@@ -73,6 +77,10 @@ export default function AuthProvider({ children }) {
                                 <Text size="1" color={isAdmin ? "green" : "red"}>
                                     {isAdmin ? "Posting enabled" : "Not authorized"}
                                 </Text>
+                                {isAdmin && (
+                                    <BlogComposer onOpenChange={() => setOpen(false)} />
+                                )}
+                                {isAdmin && <ArchivedPostsList />}
                                 <Button size="1" color="red" variant="soft" onClick={handleSignOut}>
                                     Sign out
                                 </Button>

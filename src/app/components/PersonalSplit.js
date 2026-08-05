@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import AboutCard from "@/app/components/AboutCard";
 import BlogPanel from "@/app/components/BlogPanel";
 
@@ -8,9 +9,16 @@ export default function PersonalSplit({ posts = [] }) {
     return (
         <main className="min-h-screen px-0 py-8 md:py-12">
             <div className="mx-auto flex w-full flex-col items-center gap-8">
-                <section className={columnClass}>
-                    <AboutCard />
-                </section>
+                <ViewTransition
+                    name="about"
+                    enter="fall-behind"
+                    exit="fall-behind"
+                    default="none"
+                >
+                    <section className={columnClass}>
+                        <AboutCard />
+                    </section>
+                </ViewTransition>
 
                 <section className={columnClass}>
                     <BlogPanel posts={posts} />
