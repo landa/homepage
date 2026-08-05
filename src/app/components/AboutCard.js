@@ -6,7 +6,7 @@ export default function AboutCard() {
     return (
         <ContentCard
             image={
-                <a href="/yafim.jpg" className="relative block h-full w-full rounded">
+                <a href="/yafim.jpg" className="absolute inset-0 block">
                     <Image
                         src="/yafim.png"
                         alt="Yafim Landa"
